@@ -19,15 +19,13 @@ public class accountCreatedPageEvents extends BaseTest {
 
     public void dismissPopupIfPresent() {
         try {
-            // div#dismiss-button lives in the main document (not inside an iframe)
-            // aria-label="close ad", role="button" — confirmed from DevTools screenshot
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
             wait.until(ExpectedConditions.elementToBeClickable(
                     By.xpath(accountCreatedPageElements.btnPopupClose))).click();
-            logger.info("Promotional popup dismissed");
+            // logger.info("Promotional popup dismissed");
         } catch (Exception e) {
             // Popup not present this run — that's fine, proceed normally
-            logger.info("No popup detected, continuing");
+            // logger.info("No popup detected, continuing");
         }
     }
 
@@ -45,10 +43,10 @@ public class accountCreatedPageEvents extends BaseTest {
                 new WebDriverWait(driver, Duration.ofSeconds(5))
                         .until(d -> !d.getCurrentUrl().contains("account_created"));
                 navigated = true;
-                logger.info("Continue navigation succeeded on attempt " + attempt);
+                // logger.info("Continue navigation succeeded on attempt " + attempt);
                 break;
             } catch (Exception e) {
-                logger.info("Attempt " + attempt + " did not navigate away from account_created, retrying");
+                // logger.info("Attempt " + attempt + " did not navigate away from account_created, retrying");
             }
         }
 

@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import base.BaseTest;
 import pageEvents.accountCreatedPageEvents;
+import pageEvents.deleteAccountPageEvents;
 import pageEvents.flightPageEvents;
 import pageEvents.homePageEvents;
 import pageEvents.signupOrLoginPageEvents;
@@ -29,6 +30,7 @@ public class AutomationExerciseTestCases extends BaseTest {
     signupOrLoginPageEvents signupOrLoginPage = new signupOrLoginPageEvents();
     signupPageEvents signupPage = new signupPageEvents();
     accountCreatedPageEvents accountCreatedPage = new accountCreatedPageEvents();
+    deleteAccountPageEvents deleteAccountPage = new deleteAccountPageEvents();
 
     registerPageEvents registerPage = new registerPageEvents();
     loginPageEvents loginPage = new loginPageEvents();
@@ -91,12 +93,14 @@ public class AutomationExerciseTestCases extends BaseTest {
         accountCreatedPage.clickContinueButton();
 
         // 16. Verify that 'Logged in as username' is visible
-        // This is the real proof that Continue worked and the account was created
-        // successfully.
-        // The name used during signup is stored in signupDetails — "John Doe" maps to
-        // the
-        // navbar text "Logged in as John Doe" on the home page.
         homePage.verifyLoggedInAsUsernameTabVisibility();
+
+        // 17. Click 'Delete Account' button  
+        homePage.clickDeleteAccountTab();
+
+        // 18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
+        deleteAccountPage.verifyAccountDeletedTextVisibility();
+        deleteAccountPage.clickContinueButton();
 
         // registerDetails = new Hashtable<>();
         // registerDetails.put("firstName", "Ed");

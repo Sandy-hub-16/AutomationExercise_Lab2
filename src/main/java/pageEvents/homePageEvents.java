@@ -24,4 +24,10 @@ public class homePageEvents extends BaseTest {
         assertElementIsDisplayed(locator);
     }
 
+    public void clickDeleteAccountTab(){
+        logger.info("17. Click 'Delete Account' button");
+        click(homePageElements.tabDeleteAccount);
+
+    }
+
 }
