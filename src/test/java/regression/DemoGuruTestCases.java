@@ -5,7 +5,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.hc.core5.util.Timeout;
+
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
