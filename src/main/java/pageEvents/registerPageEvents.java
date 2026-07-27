@@ -3,7 +3,7 @@ package pageEvents;
 import java.util.Dictionary;
 
 import base.BaseTest;
-import pageObjects.registerPageElements;
+
 
 public class registerPageEvents extends BaseTest{
 

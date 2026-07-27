@@ -51,8 +51,8 @@
 				<version>3.10.0</version>
 				<configuration>
 <!-- 					<source>${jdk.level}</source> <target>${jdk.level}</target> -->
-					<source>11</source>
-					<target>11</target>
+					<source>21</source>
+					<target>21</target>
 				</configuration>
 			</plugin>
 			<plugin>
