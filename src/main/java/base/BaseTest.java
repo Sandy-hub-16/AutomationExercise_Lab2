@@ -241,11 +241,14 @@ import utils.ElementFetch;
 	@Parameters({"browser"})
 	public void initializeBrowser(String browser, Method testMethod) {
 		logger = extent.createTest(testMethod.getName());
+		// 1. Launch browser
 		setupDriver(browser);
+		logger.info("1. Launch browser");
 	    driver.manage().window().maximize();
 	    driver.get(Constants.url);
 	    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-	    logger.info("URL: "+Constants.url);
+		// 2. Navigate to https://automationexercise.com
+		logger.info("2. Navigate to url " + "'"+Constants.url+"'");
 	}
 
 
