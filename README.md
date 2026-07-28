@@ -1,6 +1,6 @@
 Members: 
-Mendoza, Elaine
-Napiza, Sandy 
+Mendoza, Elaine;
+Napiza, Sandy; 
 Rosales, Frederick
 
 
