@@ -51,11 +51,17 @@ public class AutomationExerciseTestCases extends BaseTest {
     @Test(priority = 1)
     public void tc_01_Register_User() {
         // 3. Verify that home page is visible successfully
-        homePage.verifyHomePageVisibility();
+        verifyTextVisibility(
+            "3. Verify that home page is visible successfully", 
+            "//body"
+        );
         // 4. Click on 'Signup / Login' button
         homePage.navigateToSignUpOrLogin();
         // 5. Verify 'New User Signup!' is visible
-        signupOrLoginPage.verifyNewUserSignupTextVisibility();
+        verifyTextVisibility(
+            "5. Verify 'New User Signup!' is visible", 
+            "//h2[normalize-space()='New User Signup!']"
+        );
 
         // 6. Enter name and email address
         // 7. Click 'Signup' button
@@ -66,7 +72,11 @@ public class AutomationExerciseTestCases extends BaseTest {
         signupOrLoginPage.signup(signupDetails);
 
         // 8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
-        signupPage.verifyEnterAccountInfoTextVisibility();
+        verifyTextVisibility(
+            "8. Verify that 'ENTER ACCOUNT INFORMATION' is visible",
+            "//b[normalize-space()='Enter Account Information']"
+        );
+
 
         signupDetails.put("password", generatePassword());
 
@@ -84,7 +94,10 @@ public class AutomationExerciseTestCases extends BaseTest {
         signupPage.enterAccountInformation(signupDetails);
 
         // 14. Verify that 'ACCOUNT CREATED!' is visible
-        accountCreatedPage.verifyAccountCreatedTextVisibility();
+        verifyTextVisibility(
+            "14. Verify that 'ACCOUNT CREATED!' is visible",
+            "//b[normalize-space()='Account Created!']"
+        );
 
         // Dismiss popup overlay if it appears before clicking Continue
         accountCreatedPage.dismissPopupIfPresent();
@@ -93,36 +106,60 @@ public class AutomationExerciseTestCases extends BaseTest {
         accountCreatedPage.clickContinueButton();
 
         // 16. Verify that 'Logged in as username' is visible
-        homePage.verifyLoggedInAsUsernameTabVisibility();
+        verifyTextVisibility(
+            "16. Verify that 'Logged in as username' is visible",
+            "//a[contains(normalize-space(), 'Logged in as')]"
+        );
+
+        // COMMENT OUT STEP 17 AND 18 FOR TEST CASE #2 
+        // >> To be able to get an existing account
 
         // 17. Click 'Delete Account' button  
-        homePage.clickDeleteAccountTab();
+        // homePage.clickDeleteAccountTab("17");
 
-        // 18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
-        deleteAccountPage.verifyAccountDeletedTextVisibility();
-        deleteAccountPage.clickContinueButton();
-
-        // registerDetails = new Hashtable<>();
-        // registerDetails.put("firstName", "Ed");
-        // registerDetails.put("lastName", "Dela Cruz");
-        // registerDetails.put("phone", "09121234567");
-        // registerDetails.put("email", "test@test.com");
-        // registerDetails.put("address", "123 Test Way");
-        // registerDetails.put("city", "Cavite");
-        // registerDetails.put("state", "Metro Manila");
-        // registerDetails.put("postalCode", "4114");
-        // registerDetails.put("userName", "AutoTest" + generate4Digit());
-        // registerDetails.put("password", "Password" + generate4Digit());
-        // registerPage.register(registerDetails);
-        // registerPage.validateUserRegister(registerDetails);
+        // // 18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
+        // verifyTextVisibility(
+        //     "18. Verify that 'ACCOUNT DELETED!' is visible", 
+        //     "//b[normalize-space()='Account Deleted!']"
+        // );
+        // deleteAccountPage.clickContinueButton();
 
     }
 
-    // @Test(priority = 2)
-    // public void tc_02_Login() {
+    @Test(priority = 2)
+    public void tc_02_Login_User() {
     // loginPage.login(registerDetails);
+        // 3. Verify that home page is visible successfully
+        verifyTextVisibility(
+            "3. Verify that home page is visible successfully", 
+            "//body"
+        );
+        // 4. Click on 'Signup / Login' button
+        homePage.navigateToSignUpOrLogin();
+        // 5. Verify 'Login to your account' is visible
+        verifyTextVisibility(
+            "5. Verify 'Login to your account' is visible", 
+            "//h2[normalize-space()='Login to your account']"
+        );
 
-    // }
+        // 6.  Enter correct email address and password
+        // 7. Click 'login' button
+        signupOrLoginPage.login(signupDetails);
+
+        // 8. Verify that 'Logged in as username' is visible
+        verifyTextVisibility(
+            "8. Verify that 'Logged in as username' is visible", 
+            "//a[contains(normalize-space(), 'Logged in as')]"
+        );
+        
+        // 9. Click 'Delete Account' button
+        homePage.clickDeleteAccountTab("9");
+        // 10. Verify that 'ACCOUNT DELETED!' is visible
+        verifyTextVisibility(
+            "10. Verify that 'ACCOUNT DELETED!' is visible", 
+            "//b[normalize-space()='Account Deleted!']"
+        );
+    }
 
     // @Test(priority = 3)
     // public void tc_03_Reservation() {

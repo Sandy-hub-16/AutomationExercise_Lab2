@@ -11,7 +11,7 @@ public class flightPageEvents extends BaseTest{
     loginPageEvents loginPage = new  loginPageEvents();
 
     public void reserveFlight(){
-        loginPage.clickFlightButton();
+        // loginPage.clickFlightButton();
 
         //Selection of Flight
         logger.info("Select a random Flight Type");

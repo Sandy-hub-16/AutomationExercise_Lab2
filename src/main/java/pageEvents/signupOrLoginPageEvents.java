@@ -30,10 +30,24 @@ public class signupOrLoginPageEvents extends BaseTest {
         click(signupOrLoginPageElements.btnSignup);
     }
 
-    public void verifyNewUserSignupTextVisibility() {
+    public void login(@SuppressWarnings("rawtypes") Dictionary signupDetails) {
 
-        logger.info("5. Verify 'New User Signup!' is visible");
-        String newUserSignupTextLocator = "//h2[normalize-space()='New User Signup!']";
-        assertElementIsDisplayed(newUserSignupTextLocator);
+        // Fill up name and email address
+        logger.info("6.  Enter correct email address and password");
+        WebDriverWait wait = new WebDriverWait(BaseTest.driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(signupOrLoginPageElements.txtLoginEmail)));
+
+        clear(signupOrLoginPageElements.txtLoginEmail);
+        sendKeys(signupOrLoginPageElements.txtLoginEmail, signupDetails.get("email").toString());
+
+        clear(signupOrLoginPageElements.txtPassword);
+        sendKeys(signupOrLoginPageElements.txtPassword, signupDetails.get("password").toString());
+
+        // Click Sign up button
+        logger.info("7. Click 'login' button");
+        click(signupOrLoginPageElements.btnLogin);
     }
+
+    
 }

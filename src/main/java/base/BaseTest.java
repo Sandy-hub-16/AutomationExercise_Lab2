@@ -354,4 +354,10 @@ public class BaseTest {
 		select.selectByVisibleText(visibleText);
 	}
 
+	public void verifyTextVisibility(String stepName, String textLocator) {
+
+        logger.info(stepName);
+        assertElementIsDisplayed(textLocator);
+    }
+
 }

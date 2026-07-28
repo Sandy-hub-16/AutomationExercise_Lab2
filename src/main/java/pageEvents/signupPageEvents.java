@@ -76,10 +76,5 @@ public class signupPageEvents extends BaseTest {
 
     }
 
-    public void verifyEnterAccountInfoTextVisibility() {
-
-        logger.info("8. Verify that 'ENTER ACCOUNT INFORMATION' is visible");
-        String enterAccountInfoTextLocator = "//b[normalize-space()='Enter Account Information']";
-        assertElementIsDisplayed(enterAccountInfoTextLocator);
-    }
+    
 }

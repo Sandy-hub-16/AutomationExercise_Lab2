@@ -10,4 +10,8 @@ public interface signupOrLoginPageElements {
 
 
     // Login
+    String txtLoginEmail = "//input[@data-qa='login-email']";
+    String txtPassword = "//input[@placeholder='Password']";
+    
+    String btnLogin = "//button[normalize-space()='Login']";
 }

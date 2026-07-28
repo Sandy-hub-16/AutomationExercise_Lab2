@@ -11,11 +11,6 @@ import pageObjects.accountCreatedPageElements;
 
 public class accountCreatedPageEvents extends BaseTest {
 
-    public void verifyAccountCreatedTextVisibility() {
-        logger.info("14. Verify that 'ACCOUNT CREATED!' is visible");
-        String accountCreatedTextLocator = "//b[normalize-space()='Account Created!']";
-        assertElementIsDisplayed(accountCreatedTextLocator);
-    }
 
     public void dismissPopupIfPresent() {
         try {
