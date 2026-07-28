@@ -1,5 +1,6 @@
 package regression;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -15,21 +16,28 @@ import org.testng.annotations.Test;
 
 import base.BaseTest;
 import pageEvents.accountCreatedPageEvents;
+import pageEvents.contactUsPageEvents;
 import pageEvents.deleteAccountPageEvents;
 import pageEvents.homePageEvents;
+import pageEvents.productPageEvents;
 import pageEvents.signupOrLoginPageEvents;
 import pageEvents.signupPageEvents;
 
 public class AutomationExerciseTestCases extends BaseTest {
         String browser;
+        String filePath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "test"
+                        + File.separator + "resources" + File.separator + "test-upload.txt";
         Dictionary<String, String> signupDetails;
         Dictionary<String, String> incorrectLoginDetails;
         Dictionary<String, String> duplicateEmail;
+        Dictionary<String, String> contactDetails;
         homePageEvents homePage = new homePageEvents();
         signupOrLoginPageEvents signupOrLoginPage = new signupOrLoginPageEvents();
         signupPageEvents signupPage = new signupPageEvents();
         accountCreatedPageEvents accountCreatedPage = new accountCreatedPageEvents();
         deleteAccountPageEvents deleteAccountPage = new deleteAccountPageEvents();
+        contactUsPageEvents contactUsPage = new contactUsPageEvents();
+        productPageEvents productPage = new productPageEvents();
 
         @BeforeTest(alwaysRun = true)
         @Parameters({ "browser" })
@@ -224,9 +232,10 @@ public class AutomationExerciseTestCases extends BaseTest {
                 // 7. Click 'Signup' button
                 duplicateEmail = new Hashtable<>();
                 duplicateEmail.put("name", "John Doe");
-                duplicateEmail.put("email", signupDetails.get("email").toString()); // reuse the same email in registration
+                duplicateEmail.put("email", signupDetails.get("email").toString()); // reuse the same email in
+                                                                                    // registration
                 signupOrLoginPage.signup(duplicateEmail);
-                
+
                 // 8. Verify error 'Email Address already exist!' is visible
                 verifyTextVisibility(
                                 "8. Verify error 'Email Address already exist!' is visible",
@@ -235,7 +244,77 @@ public class AutomationExerciseTestCases extends BaseTest {
 
         @Test(priority = 6)
         public void tc_06_Contact_Us_Form() {
+                // 3. Verify that home page is visible successfully
+                verifyTextVisibility(
+                                "3. Verify that home page is visible successfully",
+                                "//body");
+                // 4. Click on 'Contact Us' button
+                homePage.clickContactUsTab("4");
+                // 5. Verify 'GET IN TOUCH' is visible
+                verifyTextVisibility(
+                                "5. Verify 'GET IN TOUCH' is visible",
+                                "//h2[normalize-space()='Get In Touch']");
+                // 6. Enter name, email, subject and message
+                // 7. Upload file
+                // 8. Click 'Submit' button
+                // 9. Click OK button
+                contactDetails = new Hashtable<>();
+                contactDetails.put("name", "John Doe");
+                contactDetails.put("email", generateEmail());
+                contactDetails.put("subject", "Automation Testing Inquiry");
+                contactDetails.put("message",
+                                "Hello, I am testing the Contact Us form using Selenium automation. " +
+                                                "This is a sample message for QA purposes.");
 
+                contactUsPage.fillUpContactForm(contactDetails, filePath);
+                // 10. Verify success message 'Success! Your details have been submitted
+                // successfully.' is visible
+                verifyTextVisibility(
+                                "10. Verify success message 'Success! Your details have been submitted successfully.' is visible",
+                                "//div[@class='status alert alert-success']");
+                // 11. Click 'Home' button and verify that landed to home page successfully
+                contactUsPage.clickHomeButton();
+        }
+
+        @Test(priority = 7)
+        public void tc_07_Verify_Test_Cases_Page() {
+                // 3. Verify that home page is visible successfully
+                verifyTextVisibility(
+                                "3. Verify that home page is visible successfully",
+                                "//body");
+                // 4. Click on 'Test Cases' button
+                homePage.clickTestCasesTab("4");
+                // 5. Verify user is navigated to test cases page successfully
+                verifyTextVisibility(
+                                "5. Verify user is navigated to test cases page successfully",
+                                "//b[normalize-space()='Test Cases']");
+
+        }
+
+        @Test(priority = 8)
+        public void tc_08_Verify_Products_Page() {
+                // 3. Verify that home page is visible successfully
+                verifyTextVisibility(
+                                "3. Verify that home page is visible successfully",
+                                "//body");
+                // 4. Click on 'Products' button
+                homePage.clickProductsTab("4");
+                // 5. Verify user is navigated to ALL PRODUCTS page successfully
+                verifyTextVisibility(
+                                "5. Verify user is navigated to ALL PRODUCTS page successfully",
+                                "//h2[normalize-space()='All Products']");
+                // 6. The products list is visible
+                verifyTextVisibility(
+                                "6. The products list is visible",
+                                "//div[@class='col-sm-9 padding-right']");
+                // 7. Click on 'View Product' of first product
+                productPage.clickViewProductButton();
+                // 8. User is landed to product detail page
+                verifyTextVisibility(
+                                "8. User is landed to product detail page",
+                                "//section//div[@class='row']");
+                // 9. Verify that detail detail is visible: product name, category, price, availability, condition, brand
+                productPage.verifyDetailVisibility();
         }
 
         @AfterMethod(alwaysRun = true)

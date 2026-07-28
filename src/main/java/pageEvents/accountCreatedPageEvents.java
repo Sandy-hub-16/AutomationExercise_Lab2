@@ -2,8 +2,6 @@ package pageEvents;
 
 import java.time.Duration;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import base.BaseTest;
@@ -11,18 +9,6 @@ import pageObjects.accountCreatedPageElements;
 
 public class accountCreatedPageEvents extends BaseTest {
 
-
-    public void dismissPopupIfPresent() {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-            wait.until(ExpectedConditions.elementToBeClickable(
-                    By.xpath(accountCreatedPageElements.btnPopupClose))).click();
-            // logger.info("Promotional popup dismissed");
-        } catch (Exception e) {
-            // Popup not present this run — that's fine, proceed normally
-            // logger.info("No popup detected, continuing");
-        }
-    }
 
     public void clickContinueButton() {
         logger.info("15. Click 'Continue' button");

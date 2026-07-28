@@ -26,6 +26,7 @@ public class signupOrLoginPageEvents extends BaseTest {
         sendKeys(signupOrLoginPageElements.txtEmail, signupDetails.get("email").toString());
 
         // Click Sign up button
+        dismissPopupIfPresent();
         logger.info("7. Click 'Signup' button");
         click(signupOrLoginPageElements.btnSignup);
     }
@@ -45,6 +46,7 @@ public class signupOrLoginPageEvents extends BaseTest {
         sendKeys(signupOrLoginPageElements.txtPassword, signupDetails.get("password").toString());
 
         // Click Sign up button
+        dismissPopupIfPresent();
         logger.info("7. Click 'login' button");
         click(signupOrLoginPageElements.btnLogin);
     }

@@ -8,7 +8,9 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
-import java.util.NoSuchElementException;
+import java.util.List;
+
+import org.openqa.selenium.NoSuchElementException;
 import java.util.Random;
 import org.openqa.selenium.WebElement;
 
@@ -355,9 +357,61 @@ public class BaseTest {
 	}
 
 	public void verifyTextVisibility(String stepName, String textLocator) {
+		logger.info(stepName);
 
-        logger.info(stepName);
-        assertElementIsDisplayed(textLocator);
-    }
+		int maxAttempts = 2;
+		for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+			try {
+				assertElementIsDisplayed(textLocator);
+				return; // success — exit immediately
+			} catch (AssertionError e) {
+				if (attempt == maxAttempts) {
+					throw e; // out of retries — let the real failure surface
+				}
+				dismissPopupIfPresent(); // ad may have appeared — try clearing it
+			}
+		}
+	}
+
+	public void dismissPopupIfPresent() {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Constants.btnPopupClose)));
+		} catch (Exception e) {
+			// No popup appeared within the wait window — nothing to dismiss
+			return;
+		}
+
+		List<WebElement> closeButtons = driver.findElements(By.xpath(Constants.btnPopupClose));
+		for (WebElement closeButton : closeButtons) {
+			try {
+				closeButton.click();
+			} catch (Exception e) {
+				// This particular button may have already disappeared/been removed — skip it
+			}
+		}
+	}
+	
+	public void clickTab(String stepName, String locator) {
+		logger.info(stepName);
+
+		String startingUrl = driver.getCurrentUrl();
+		int maxAttempts = 3;
+
+		for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+			dismissPopupIfPresent();
+			click(locator);
+
+			try {
+				new WebDriverWait(driver, Duration.ofSeconds(5))
+						.until(d -> !d.getCurrentUrl().equals(startingUrl));
+				return; // navigation succeeded
+			} catch (Exception e) {
+				// URL didn't change — ad likely blocked it, retry
+			}
+		}
+		// If it never navigated after all attempts, proceed anyway —
+		// let verifyTextVisibility's own failure surface the real problem
+	}
 
 }

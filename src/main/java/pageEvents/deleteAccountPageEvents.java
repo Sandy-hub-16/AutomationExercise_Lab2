@@ -7,6 +7,7 @@ public class deleteAccountPageEvents extends BaseTest {
 
 
     public void clickContinueButton() {
+        dismissPopupIfPresent();
         click(deleteAccountPageElements.btnContinue);
     }
     
