@@ -15,7 +15,11 @@ public class homePageEvents extends BaseTest {
     public void clickDeleteAccountTab(String number){
         logger.info(number+". Click 'Delete Account' button");
         click(homePageElements.tabDeleteAccount);
+    }
 
+    public void clickLogoutTab(String number){
+        logger.info(number+". Click 'Logout' button");
+        click(homePageElements.tabLogout);
     }
 
 }
