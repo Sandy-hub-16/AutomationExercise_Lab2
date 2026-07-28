@@ -16,25 +16,19 @@ import org.testng.annotations.Test;
 import base.BaseTest;
 import pageEvents.accountCreatedPageEvents;
 import pageEvents.deleteAccountPageEvents;
-import pageEvents.flightPageEvents;
 import pageEvents.homePageEvents;
 import pageEvents.signupOrLoginPageEvents;
 import pageEvents.signupPageEvents;
-import pageEvents.loginPageEvents;
-import pageEvents.registerPageEvents;
 
 public class AutomationExerciseTestCases extends BaseTest {
     String browser;
     Dictionary<String, String> signupDetails;
+    Dictionary<String, String> incorrectLoginDetails;
     homePageEvents homePage = new homePageEvents();
     signupOrLoginPageEvents signupOrLoginPage = new signupOrLoginPageEvents();
     signupPageEvents signupPage = new signupPageEvents();
     accountCreatedPageEvents accountCreatedPage = new accountCreatedPageEvents();
     deleteAccountPageEvents deleteAccountPage = new deleteAccountPageEvents();
-
-    registerPageEvents registerPage = new registerPageEvents();
-    loginPageEvents loginPage = new loginPageEvents();
-    flightPageEvents flightPage = new flightPageEvents();
 
     @BeforeTest(alwaysRun = true)
     @Parameters({ "browser" })
@@ -52,16 +46,14 @@ public class AutomationExerciseTestCases extends BaseTest {
     public void tc_01_Register_User() {
         // 3. Verify that home page is visible successfully
         verifyTextVisibility(
-            "3. Verify that home page is visible successfully", 
-            "//body"
-        );
+                "3. Verify that home page is visible successfully",
+                "//body");
         // 4. Click on 'Signup / Login' button
         homePage.navigateToSignUpOrLogin();
         // 5. Verify 'New User Signup!' is visible
         verifyTextVisibility(
-            "5. Verify 'New User Signup!' is visible", 
-            "//h2[normalize-space()='New User Signup!']"
-        );
+                "5. Verify 'New User Signup!' is visible",
+                "//h2[normalize-space()='New User Signup!']");
 
         // 6. Enter name and email address
         // 7. Click 'Signup' button
@@ -73,10 +65,8 @@ public class AutomationExerciseTestCases extends BaseTest {
 
         // 8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
         verifyTextVisibility(
-            "8. Verify that 'ENTER ACCOUNT INFORMATION' is visible",
-            "//b[normalize-space()='Enter Account Information']"
-        );
-
+                "8. Verify that 'ENTER ACCOUNT INFORMATION' is visible",
+                "//b[normalize-space()='Enter Account Information']");
 
         signupDetails.put("password", generatePassword());
 
@@ -95,9 +85,8 @@ public class AutomationExerciseTestCases extends BaseTest {
 
         // 14. Verify that 'ACCOUNT CREATED!' is visible
         verifyTextVisibility(
-            "14. Verify that 'ACCOUNT CREATED!' is visible",
-            "//b[normalize-space()='Account Created!']"
-        );
+                "14. Verify that 'ACCOUNT CREATED!' is visible",
+                "//b[normalize-space()='Account Created!']");
 
         // Dismiss popup overlay if it appears before clicking Continue
         accountCreatedPage.dismissPopupIfPresent();
@@ -107,65 +96,83 @@ public class AutomationExerciseTestCases extends BaseTest {
 
         // 16. Verify that 'Logged in as username' is visible
         verifyTextVisibility(
-            "16. Verify that 'Logged in as username' is visible",
-            "//a[contains(normalize-space(), 'Logged in as')]"
-        );
+                "16. Verify that 'Logged in as username' is visible",
+                "//a[contains(normalize-space(), 'Logged in as')]");
 
-        // COMMENT OUT STEP 17 AND 18 FOR TEST CASE #2 
+        // COMMENT OUT STEP 17 AND 18 FOR TEST CASE #2
         // >> To be able to get an existing account
 
-        // 17. Click 'Delete Account' button  
+        // 17. Click 'Delete Account' button
         // homePage.clickDeleteAccountTab("17");
 
         // // 18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
         // verifyTextVisibility(
-        //     "18. Verify that 'ACCOUNT DELETED!' is visible", 
-        //     "//b[normalize-space()='Account Deleted!']"
+        // "18. Verify that 'ACCOUNT DELETED!' is visible",
+        // "//b[normalize-space()='Account Deleted!']"
         // );
         // deleteAccountPage.clickContinueButton();
 
     }
 
     @Test(priority = 2)
-    public void tc_02_Login_User() {
-    // loginPage.login(registerDetails);
+    public void tc_02_Login_User_w_Correct_Credentials() {
         // 3. Verify that home page is visible successfully
         verifyTextVisibility(
-            "3. Verify that home page is visible successfully", 
-            "//body"
-        );
+                "3. Verify that home page is visible successfully",
+                "//body");
         // 4. Click on 'Signup / Login' button
         homePage.navigateToSignUpOrLogin();
         // 5. Verify 'Login to your account' is visible
         verifyTextVisibility(
-            "5. Verify 'Login to your account' is visible", 
-            "//h2[normalize-space()='Login to your account']"
-        );
+                "5. Verify 'Login to your account' is visible",
+                "//h2[normalize-space()='Login to your account']");
 
-        // 6.  Enter correct email address and password
+        // 6. Enter correct email address and password
         // 7. Click 'login' button
-        signupOrLoginPage.login(signupDetails);
+        signupOrLoginPage.login(signupDetails, "correct");
 
         // 8. Verify that 'Logged in as username' is visible
         verifyTextVisibility(
-            "8. Verify that 'Logged in as username' is visible", 
-            "//a[contains(normalize-space(), 'Logged in as')]"
-        );
-        
+                "8. Verify that 'Logged in as username' is visible",
+                "//a[contains(normalize-space(), 'Logged in as')]");
+
         // 9. Click 'Delete Account' button
         homePage.clickDeleteAccountTab("9");
         // 10. Verify that 'ACCOUNT DELETED!' is visible
         verifyTextVisibility(
-            "10. Verify that 'ACCOUNT DELETED!' is visible", 
-            "//b[normalize-space()='Account Deleted!']"
-        );
+                "10. Verify that 'ACCOUNT DELETED!' is visible",
+                "//b[normalize-space()='Account Deleted!']");
     }
 
-    // @Test(priority = 3)
-    // public void tc_03_Reservation() {
-    // flightPage.reserveFlight();
+    @Test(priority = 3)
+    public void tc_03_Login_User_w_Incorrect_Credentials() {
+        // 3. Verify that home page is visible successfully
+        verifyTextVisibility(
+                "3. Verify that home page is visible successfully",
+                "//body");
+        // 4. Click on 'Signup / Login' button
+        homePage.navigateToSignUpOrLogin();
+        // 5. Verify 'Login to your account' is visible
+        verifyTextVisibility(
+                "5. Verify 'Login to your account' is visible",
+                "//h2[normalize-space()='Login to your account']"
+        );
 
-    // }
+        // 6. Enter incorrect email address and password
+        // 7. Click 'login' button
+        incorrectLoginDetails = new Hashtable<>();
+        incorrectLoginDetails.put("email", "wrongemail@test.com");
+        incorrectLoginDetails.put("password", "WrongPassword123!");
+
+        signupOrLoginPage.login(incorrectLoginDetails, "incorrect");
+
+        // 8. Verify error 'Your email or password is incorrect!' is visible
+        verifyTextVisibility(
+                "8. Verify error 'Your email or password is incorrect!' is visible",
+                "//p[normalize-space()='Your email or password is incorrect!']"
+        );
+
+    }
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod(ITestResult result) {

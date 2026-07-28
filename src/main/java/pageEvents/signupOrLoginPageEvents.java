@@ -30,10 +30,10 @@ public class signupOrLoginPageEvents extends BaseTest {
         click(signupOrLoginPageElements.btnSignup);
     }
 
-    public void login(@SuppressWarnings("rawtypes") Dictionary signupDetails) {
+    public void login(@SuppressWarnings("rawtypes") Dictionary signupDetails, String correctOrIncorrect) {
 
         // Fill up name and email address
-        logger.info("6.  Enter correct email address and password");
+        logger.info("6.  Enter " +correctOrIncorrect+ " email address and password");
         WebDriverWait wait = new WebDriverWait(BaseTest.driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath(signupOrLoginPageElements.txtLoginEmail)));
